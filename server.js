@@ -25,12 +25,13 @@ if (fs.existsSync(SESSION_FILE_PATH)) {
 
 const client = new Client({
   puppeteer: {
-    headless: false,
+    headless: true,
   },
   authStrategy: new LocalAuth({
     clientId: "YOUR_CLIENT_ID",
   }),
 });
+await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36")
 
 client.on("qr", (qr) => {
   console.log("QR RECEIVED", qr);
