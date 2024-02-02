@@ -26,6 +26,7 @@ if (fs.existsSync(SESSION_FILE_PATH)) {
 const client = new Client({
   puppeteer: {
     headless: false,
+     ignoreDefaultArgs: ['--disable-extensions'],
   },
   authStrategy: new LocalAuth({
     clientId: "YOUR_CLIENT_ID",
