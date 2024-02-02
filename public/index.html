@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>WhatsApp Excel Add-in</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="index.js"></script>
+
+    <script>
+        function startLogging() {
+          const startLoggingBtn = document.getElementById('startLoggingBtn');
+          startLoggingBtn.disabled = true;
+          
+          axios
+            .post('/start-logging')
+            .then(function (response) {
+              console.log('Logging started successfully');
+            })
+            .catch(function (error) {
+              console.error('Error starting logging:', error);
+              startLoggingBtn.disabled = false; // Re-enable the button on error
+            });
+        }
+  
+        function generateQRCode() {
+          axios
+            .get('/qr-code')
+            .then(function (response) {
+              const qrCodeImg = document.getElementById('qr-code-img');
+              qrCodeImg.src = response.data.qr;
+            })
+            .catch(function (error) {
+              console.error('Error generating QR code:', error);
+            });
+        }
+        
+        // Uncomment the code below if you want to include the generateLinkPreviewCode function
+        /*
+        function generateLinkPreviewCode() {
+          axios
+            .get('/link-preview')
+            .then(function (response) {
+              const linkPreviewCode = response.data.code;
+              console.log('Link preview code:', linkPreviewCode);
+            })
+            .catch(function (error) {
+              console.error('Error generating link preview code:', error);
+            });
+        }
+        */
+    </script>
+    
+</head>
+<body>
+    <h1>WhatsApp Logger</h1>
+    <button id="startLoggingBtn" onclick="startLogging()">Start Logging</button>
+    <button onclick="generateQRCode()">Generate QR Code</button>
+   
+    <br />
+    <img id="qr-code-img" src="" alt="QR Code" />
+</body>
+</html>
